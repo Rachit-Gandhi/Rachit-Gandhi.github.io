@@ -153,6 +153,11 @@ h6 {
   }
 }
 
+.article {
+  margin: 50px auto;
+  max-width: 680px;
+  padding: 0 15px;
+}
 /*--------------------------------------------------------------
 # Navigation Menu
 --------------------------------------------------------------*/
@@ -1104,3 +1109,54 @@ section {
     padding-right: 20px 15px;
   }
 }
+body {
+  background-color: #f5f8fa;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  background-color: #fff;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 40px auto;
+  max-width: 1000px;
+}
+
+.page h2 {
+  color: #003366;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.page p {
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.page h3 {
+  color: #0055cc;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.page-description {
+  font-size: 20px;
+  font-weight: bold;
+}
+.img_head {
+  max-width: 100%;
+  height: auto;
+  width:auto;
+  align-items: center;
+}
+/* Define your other classes based on the table properties */
+
+/* You can style headers, links, and other elements as well */
+
+
+/* Define your other classes based on the table properties */
+
+/* You can style headers, links, and other elements as well */

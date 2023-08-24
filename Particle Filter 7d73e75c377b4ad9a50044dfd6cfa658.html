@@ -1,0 +1,677 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Particle Filter</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="7d73e75c-377b-4ad9-a500-44dfd6cfa658" class="page sans"><header><h1 class="page-title">Particle Filter</h1><p class="page-description"></p><table class="properties"><tbody></tbody></table></header><div class="page-body"><h1 id="afb2af74-ae8e-4038-a116-a154f060d92e" class="">Particle Filter</h1><h2 id="7da41106-cec2-4a2f-9b12-536158850417" class="">Unraveling the Magic of Particle Filters: From Blindfolded Games to Robot Pose Estimation</h2><p id="8b7dc2ab-a2fc-40be-b28b-e2dc099777aa" class="">Have you ever found yourself in a dark room, blindfolded and spinning around, relying solely on your friends&#x27; shouts to avoid crashing into walls? It&#x27;s an exhilarating game that pushes your senses to the limit. But did you know that this game holds the key to understanding the fascinating world of particle filters and their role in helping robots estimate their poses in complex environments? Let&#x27;s dive into this captivating topic together!</p><h2 id="eb736932-c1ef-499c-88ce-a1dd53c7658b" class="">Intuitive Understanding of the Particle Filter</h2><p id="9f594711-2f09-4693-961a-3bf25f8e8cd4" class="">Imagine being blindfolded and spun around like a top. It&#x27;s disorienting, to say the least. In this situation, you can&#x27;t rely on your vision. So, what can you rely on? Your friends, of course! As you stumble in the dark, your friends shout &quot;DANGER! DANGER!&quot; whenever you&#x27;re close to a wall, providing you with crucial cues about your surroundings. However, in a room, there are four walls, so you don&#x27;t know which one you&#x27;re facing. But fear not, there&#x27;s another sense you can use - your hearing. You listen carefully to the direction and distance of your friends&#x27; shouts or even their footsteps while running. With each event of &quot;DANGER&quot; and playful howling, your understanding of your position and orientation in the room improves. Your ultimate objective shifts from understanding your position to the exciting challenge of catching your friends. And as soon as you succeed, the blindfolded role switches to one of your friends.</p><p id="b7ae1dc6-547f-42a5-a496-740fb5bd8683" class="">Now, let&#x27;s draw parallels to the world of robotics. Imagine a robot placed in an environment, armed with a map of its surroundings, just like you had the layout of your own room. However, this robot has no idea about its own pose or what it may be facing. To assist the robot, we equip it with a powerful LIDAR sensor, providing two senses to rely on: the point cloud data of obstacles and a motion model.</p><p id="345e4296-baf4-4c13-8ea4-e7cc631792bb" class="">However, There&#x27;s a question to ponder here How reliable was your distance perception or your friends&#x27; cues during the blindfolded game?</p><p id="d19fae62-bee4-411b-af40-f2d25514da25" class="">If you&#x27;ve followed our previous blog series on the Kalman Filter (highly recommended), you&#x27;re aware that every sensor has noise, and leveraging multiple noisy observations leads to a better estimation.</p><p id="e44b250d-2702-4217-bb45-03bf82f97328" class="">In our scenario, both the LIDAR point clouds and the motion model introduce noise. Drawing on your familiarity with the Kalman Filter, you might think of using it to handle these noisy inputs and provide an estimated state. However, there&#x27;s an essential requirement - the noise must follow a specific probability distribution known as Gaussian. If the noise doesn&#x27;t fit this distribution, the Kalman Filter won&#x27;t be effective. But where does this non-Gaussian probability distribution is encoutered for that let’s follow the robotics example with a few illustrations</p><h3 id="6d3b4b15-1bdc-4c7e-b4a9-a1635ad02f6d" class="">1. Initialization</h3><p id="3fa9cbe0-a69c-4735-8b13-9b251208bf36" class="">The first step in the Particle Filter algorithm is the initialization phase. The robot starts by scattering particles randomly throughout the space with random orientations. Each particle represents a probable pose of the robot. The number of particles used depends on the size and complexity of the explored space, but for simplicity, let&#x27;s consider 100 poses initially.</p><p id="61610d7e-9461-4adc-ad2e-e71b25a00763" class="">The random scattering of particles provides an initial approximation of the robot&#x27;s pose distribution in the environment. This distribution is called the &quot;prior distribution&quot; or the &quot;prior belief.&quot;</p><h3 id="9d2b26bc-b39f-43c0-9d0b-5c85ccf63bad" class="">2. Sensor Measurement</h3><p id="57acc6e7-69a8-4378-8363-9adf4fe773ba" class="">Once the particles are scattered, the journey begins with an initial sensor reading from the LIDAR, which provides information about the surroundings. For example, the robot may detect a flat wall straight ahead. This sensor measurement serves as a cue to refine the randomly scattered particles. It is not deterministic as many locations could give this reading even false positives from middle of room facing nothing.</p><p id="5e130dd8-edf4-440f-bd31-d667a65beb92" class="">Using the sensor measurement, the particles are weighted and then resampled, allocating more particles at positions and orientations where they are likely to encounter the observed feature (in this case, the straight wall). The resampling process aims to align the particles with the actual environment, increasing the likelihood of capturing the robot&#x27;s true pose.</p><p id="ae903bad-7caa-4a48-af9b-939d5080dde5" class="">But what exactly is a MOTION MODEL? In simple terms, it captures the relationship between an object&#x27;s current state (position and orientation) and its future state, considering factors like velocity, acceleration, and direction of movement. The motion model allows us to estimate or predict where the robot is likely to be in the future, given its current state and known control inputs.</p><h3 id="f744cc0d-ab8f-4e42-9bbd-d683e3631fe4" class="">3. Motion Model</h3><p id="78837e32-f9f5-4abc-a23d-c840eab66a5e" class="">As the robot moves, the particles move accordingly. The motion model comes into play to update the particle positions based on the known control inputs and the robot&#x27;s current state. The motion model captures the relationship between the robot&#x27;s current state (position and orientation) and its future state, considering factors like velocity, acceleration, and direction of movement.</p><p id="aa19ebe1-7a78-451a-affb-ed9b9344eb67" class="">By applying the motion model to each particle, the algorithm predicts where the particles are likely to be in the next time step. This prediction accounts for the robot&#x27;s expected movement, improving the estimation of the robot&#x27;s pose.</p><h3 id="bdeb893a-b3cc-42e3-8d18-2ca542150de1" class="">4. Monte Carlo Localization and Resampling</h3><p id="78dce44c-4fec-4f9e-8641-5403a823a9d4" class="">The Particle Filter algorithm performs the <strong>weight assignment step</strong>. Each particle is assigned a weight that reflects how well it aligns with the sensor measurements. The weight represents the likelihood of a particle being the true pose of the robot given the sensor data.</p><p id="8f79fe32-eaf9-4c06-b6a4-ebdf659278e9" class="">Particles that better match the sensor measurements receive higher weights, while particles that do not align well receive lower weights. This weight assignment is typically done by comparing the sensor measurement with the expected measurement at each particle&#x27;s pose.</p><p id="dd4e4736-5fde-4a43-aa2f-fde2e929da11" class="">The purpose of the weight assignment is to emphasize particles that are more likely to represent the true pose of the robot. It allows the algorithm to focus on particles that have a higher chance of capturing the actual state, filtering out less probable particles.</p><p id="65dc8826-d891-4316-92a2-a1bc96e27f74" class="">After the weight assignment, the Particle Filter algorithm performs resampling to generate a new set of particles for the next iteration. The resampling step aims to maintain a representative set of particles that better represents the true pose distribution.</p><p id="a367ce73-5365-4639-92d3-c9435266f85a" class="">The resampling process is based on the assigned weights. Particles with higher weights have a higher probability of being selected for the next generation, while particles with lower weights have a lower chance of being chosen.</p><p id="0b7bb696-77c2-4faa-b27b-be3b8ed29728" class="">Resampling helps concentrate the particles around areas of high probability, ensuring that the algorithm focuses on regions where the robot is likely to be located. This adaptive resampling enables the algorithm to adapt to changes in the environment and converge to a more accurate estimate of the robot&#x27;s pose.</p><h3 id="9b6415d0-6b66-426b-b7f5-9e947fe96564" class="">5. Non-Gaussian Distribution</h3><p id="3dd64808-01ca-4aed-89cd-7506d0cdf579" class="">Something we had promised before to touch on, let’s bring back few of the old resampling illustrations. Can we call these distribution to be gaussian ? What is gaussian? Well this has been discussed in previous blogs,</p><p id="493156fa-a9e6-48ac-942c-1be7e8850cef" class="">In summary, Gaussian distributions are bell-shaped curves that represent symmetric data clustering around a mean, while non-Gaussian distributions encompass a broader range of shapes and patterns. Well using these illustrations it’s obvious all the resampling makes the distribution to be non-gaussian, and the process of monte-carlo localisation and resampling is the main unit block in particle filters.</p><h3 id="3bd3f79b-92eb-4592-bb4c-c3c31037ad27" class="">6. Iteration</h3><p id="5a5c5ceb-8a8e-4ae6-8700-ccfc71101fdd" class="">The Particle Filter algorithm continues to iterate through the steps of motion prediction, weight assignment, and resampling. With each iteration, the particle filter refines the estimate of the robot&#x27;s pose.</p><p id="d0991ae7-c05f-4582-9d7a-900e71880546" class="">The process doesn&#x27;t end after a single iteration. Multiple iterations are performed to iteratively improve the estimation of the robot&#x27;s pose. As the iterations progress, the particles become increasingly concentrated around the true pose, providing a clearer understanding of the robot&#x27;s state.</p><p id="2d9f981f-51b8-45ce-a8a7-8f6da36d0df0" class="">The number of iterations required depends on the complexity of the environment, the quality of sensor measurements, and the desired level of accuracy. The algorithm continues until the estimated pose converges to a satisfactory level or until a specified stopping criterion is met.</p><h2 id="1b9f377f-2476-44d9-affd-74c8631bba00" class="">Conclusion</h2><p id="85732fed-196a-482c-b216-b302d1adfdc8" class="">In this blog, we explored the formal steps involved in the Particle Filter algorithm and gained a more detailed understanding of how it works. From the initialization and scattering of particles to the refinement through sensor measurements and motion models, each step contributes to improving the estimation of the robot&#x27;s pose.</p><p id="40d488d9-e920-465f-b6d6-70a6e4adf91f" class="">The process of weight assignment and resampling helps adaptively handle complex probability spaces, ensuring that the algorithm focuses on areas of high likelihood and filters out less probable particles.</p><p id="deef04d2-6471-4b92-b8bc-d1e53caaea4d" class="">Through iterations, the particle filter progressively refines its estimate, converging to a more accurate representation of the robot&#x27;s pose. This powerful algorithm has revolutionized the field of robotics and enables robots to effectively navigate and interact with their environments.</p><p id="fa063d4b-2073-45ca-8a1b-428b57254fd1" class="">So, the next time you encounter a robot estimating its pose in a complex environment, remember the magic of particle filters and how they rely on the interplay between sensor measurements, motion models, and resampling to unravel the robot&#x27;s state.</p><p id="d10a70f2-6ad9-4fd5-b87b-ef534ff639f3" class="">
+</p></div></article></body></html>
