@@ -1152,10 +1152,7 @@ body {
   width:auto;
   align-items: center;
 }
-p img{
-  max-width: 100%;
-  height: auto;
-}
+
 /* Define your other classes based on the table properties */
 
 /* You can style headers, links, and other elements as well */
