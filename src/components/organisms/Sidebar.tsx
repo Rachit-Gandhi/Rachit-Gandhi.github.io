@@ -1,4 +1,5 @@
 import { X } from "lucide-react";
+import { Link } from "react-router-dom";
 import Button from "../atoms/Button";
 import styles from "./Sidebar.module.css";
 
@@ -17,9 +18,9 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
         </button>
       </div>
       <div className={styles.links}>
-        <Button className={styles.link}>Home</Button>
+        <Link to="/" className={styles.linkWrap}><Button className={styles.link}>Home</Button></Link>
         <Button className={styles.link}>Portfolio</Button>
-        <Button className={styles.link}>Blog</Button>
+        <Link to="/blog" className={styles.linkWrap}><Button className={styles.link}>Blog</Button></Link>
         <Button className={styles.link}>Contact Me</Button>
       </div>
     </aside>

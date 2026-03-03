@@ -28,6 +28,10 @@
   cursor: pointer;
 }
 
+.linkWrap {
+  text-decoration: none;
+}
+
 @media (max-width: 720px) {
   .right {
     display: none;

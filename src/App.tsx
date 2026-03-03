@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { darkTheme, lightTheme } from "./theme";
-import Header from "./components/organisms/Header";
-import Sidebar from "./components/organisms/Sidebar";
-import Hero from "./components/organisms/Hero";
-import PortfolioSection from "./components/organisms/PortfolioSection";
-import BlogSection from "./components/organisms/BlogSection";
-import Footer from "./components/organisms/Footer";
+import Layout from "./routes/Layout";
+import Home from "./routes/Home";
+import Blog from "./routes/Blog";
+import BlogPost from "./routes/BlogPost";
 import "./styles/global.css";
 
 function setThemeVars(theme: typeof lightTheme | typeof darkTheme) {
@@ -27,24 +26,38 @@ function getThemeByLocalTime() {
 }
 
 export default function App() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   useEffect(() => {
     setThemeVars(getThemeByLocalTime());
   }, []);
 
   return (
-    <div className="page">
-      <Header onMenuOpen={() => setMenuOpen(true)} />
-      <Sidebar open={menuOpen} onClose={() => setMenuOpen(false)} />
-
-      <main className="content">
-        <Hero />
-        <PortfolioSection />
-        <BlogSection />
-      </main>
-
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Layout>
+              <Home />
+            </Layout>
+          }
+        />
+        <Route
+          path="/blog"
+          element={
+            <Layout>
+              <Blog />
+            </Layout>
+          }
+        />
+        <Route
+          path="/blog/:slug"
+          element={
+            <Layout>
+              <BlogPost />
+            </Layout>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
   );
 }
