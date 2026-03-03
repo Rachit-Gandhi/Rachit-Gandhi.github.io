@@ -1,0 +1,41 @@
+.hero {
+  padding: 40px 0 60px;
+}
+
+.heroInner {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 48px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.helloWrap {
+  display: flex;
+  align-items: center;
+}
+
+.helloSvg {
+  width: 100%;
+  max-width: 520px;
+  height: 120px;
+}
+
+.helloText {
+  font-size: 96px;
+  font-weight: 600;
+  fill: url(#helloGradient);
+  animation: wobble 4s ease-in-out infinite;
+}
+
+.sub {
+  color: var(--textMuted);
+  font-size: 14px;
+}
+
+@keyframes wobble {
+  0%, 100% { letter-spacing: 0px; }
+  50% { letter-spacing: 3px; }
+}

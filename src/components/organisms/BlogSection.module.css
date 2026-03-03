@@ -1,0 +1,16 @@
+.section {
+  margin-top: 40px;
+}
+
+.title {
+  margin: 0 0 12px;
+}
+
+.scroll {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(220px, 1fr);
+  gap: 16px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
