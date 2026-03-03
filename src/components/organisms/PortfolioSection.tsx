@@ -1,4 +1,5 @@
-import PortfolioAccordion, { PortfolioItem } from "../molecules/PortfolioAccordion";
+import PortfolioAccordion from "../molecules/PortfolioAccordion";
+import type { PortfolioItem } from "../molecules/PortfolioAccordion";
 import styles from "./PortfolioSection.module.css";
 
 export default function PortfolioSection() {
