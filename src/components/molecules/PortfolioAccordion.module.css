@@ -2,8 +2,25 @@
   background: transparent;
 }
 
-.heading {
+.headingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin: 0 0 12px;
+}
+
+.heading {
+  margin: 0;
+}
+
+.link {
+  color: var(--textMuted);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.link:hover {
+  color: var(--primary);
 }
 
 .list {

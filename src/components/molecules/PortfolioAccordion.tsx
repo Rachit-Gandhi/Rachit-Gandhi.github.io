@@ -10,14 +10,23 @@ export type PortfolioItem = {
 type PortfolioAccordionProps = {
   title: string;
   items: PortfolioItem[];
+  linkHref?: string;
+  anchorId?: string;
 };
 
-export default function PortfolioAccordion({ title, items }: PortfolioAccordionProps) {
+export default function PortfolioAccordion({ title, items, linkHref, anchorId }: PortfolioAccordionProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className={styles.wrap}>
-      <h3 className={styles.heading}>{title}</h3>
+    <div className={styles.wrap} id={anchorId}>
+      <div className={styles.headingRow}>
+        <h3 className={styles.heading}>{title}</h3>
+        {linkHref && (
+          <a className={styles.link} href={linkHref} aria-label={`${title} link`}>
+            ↗
+          </a>
+        )}
+      </div>
       <div className={styles.list}>
         {items.map((item, idx) => (
           <div key={item.title} className={styles.item}>
@@ -33,7 +42,7 @@ export default function PortfolioAccordion({ title, items }: PortfolioAccordionP
                 <p>{item.description}</p>
                 <div className={styles.carousel}>
                   <div className={styles.track}>
-                    {(item.images?.length ? item.images : ["", "", ""]).map((img, i) => (
+                    {(item.images?.length ? item.images : ["", "", ""]).concat(item.images?.length ? item.images : ["", "", ""]).map((img, i) => (
                       <div className={styles.slide} key={i}>
                         {img ? <img src={img} alt="" /> : "Image"}
                       </div>

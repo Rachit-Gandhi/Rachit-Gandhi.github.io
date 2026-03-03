@@ -14,11 +14,13 @@ export default function PortfolioSection() {
   ];
 
   return (
-    <section className={styles.section}>
-      <h2 className={styles.title}>Portfolio</h2>
+    <section className={styles.section} id="portfolio">
+      <div className={styles.header}>
+        <h2 className={styles.title}>Portfolio</h2>
+      </div>
       <div className={styles.stack}>
         <PortfolioAccordion title="Work Experience" items={workItems} />
-        <PortfolioAccordion title="Projects" items={projectItems} />
+        <PortfolioAccordion title="Projects" items={projectItems} linkHref="#projects" anchorId="projects" />
         <PortfolioAccordion title="Education" items={educationItems} />
       </div>
     </section>
