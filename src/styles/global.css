@@ -6,6 +6,10 @@
   background-color: var(--bg);
 }
 
+a {
+  color: var(--primary);
+}
+
 * {
   box-sizing: border-box;
 }

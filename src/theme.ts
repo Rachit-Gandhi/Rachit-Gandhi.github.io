@@ -14,12 +14,12 @@ export const lightTheme = {
 export const darkTheme = {
   name: "matcha-moccha",
   colors: {
-    bg: "#332421",
-    surface: "#3C341E",
+    bg: "#4B362C",
+    surface: "#5D4A41",
     primary: "#7A9447",
     secondary: "#4E6447",
-    highlight: "#816B58",
+    highlight: "#6E5E56",
     text: "#E8DCC8",
-    textMuted: "#B58B78",
+    textMuted: "#81726B",
   },
 } as const;

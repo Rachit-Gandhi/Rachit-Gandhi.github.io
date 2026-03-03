@@ -40,15 +40,17 @@ export default function PortfolioAccordion({ title, items, linkHref, anchorId }:
             {openIndex === idx && (
               <div className={styles.itemBody}>
                 <p>{item.description}</p>
-                <div className={styles.carousel}>
-                  <div className={styles.track}>
-                    {(item.images?.length ? item.images : ["", "", ""]).concat(item.images?.length ? item.images : ["", "", ""]).map((img, i) => (
-                      <div className={styles.slide} key={i}>
-                        {img ? <img src={img} alt="" /> : "Image"}
-                      </div>
-                    ))}
+                {item.images?.length ? (
+                  <div className={styles.carousel}>
+                    <div className={styles.track}>
+                      {item.images.concat(item.images).map((img, i) => (
+                        <div className={styles.slide} key={i}>
+                          {img ? <img src={img} alt="" /> : "Image"}
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                ) : null}
               </div>
             )}
           </div>

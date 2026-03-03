@@ -4,13 +4,13 @@ import styles from "./PortfolioSection.module.css";
 
 export default function PortfolioSection() {
   const workItems: PortfolioItem[] = [
-    { title: "Role / Company", description: "Details soon", images: ["", "", ""] },
+    { title: "Role / Company", description: "Details soon" },
   ];
   const projectItems: PortfolioItem[] = [
     { title: "Project", description: "Details soon", images: ["", "", ""] },
   ];
   const educationItems: PortfolioItem[] = [
-    { title: "Institution", description: "Details soon", images: ["", "", ""] },
+    { title: "Institution", description: "Details soon" },
   ];
 
   return (
