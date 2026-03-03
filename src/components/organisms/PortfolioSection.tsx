@@ -20,7 +20,7 @@ export default function PortfolioSection() {
       </div>
       <div className={styles.stack}>
         <PortfolioAccordion title="Work Experience" items={workItems} />
-        <PortfolioAccordion title="Projects" items={projectItems} linkHref="#projects" anchorId="projects" />
+        <PortfolioAccordion title="Projects" items={projectItems} linkHref="/portfolio" anchorId="projects" />
         <PortfolioAccordion title="Education" items={educationItems} />
       </div>
     </section>

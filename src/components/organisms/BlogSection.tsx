@@ -7,7 +7,7 @@ export default function BlogSection() {
     <section className={styles.section} id="blog">
       <div className={styles.header}>
         <h2 className={styles.title}>Blog</h2>
-        <a className={styles.link} href="#blog" aria-label="Blog link">
+        <a className={styles.link} href="/blog" aria-label="Blog link">
           <ArrowUpRight size={16} />
         </a>
       </div>

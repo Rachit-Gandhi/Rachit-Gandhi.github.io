@@ -14,7 +14,7 @@ export default function Header({ onMenuOpen }: HeaderProps) {
         <Link to="/" className={styles.linkWrap}><Button>Home</Button></Link>
       </div>
       <nav className={styles.right}>
-        <Button>Portfolio</Button>
+        <Link to="/portfolio" className={styles.linkWrap}><Button>Portfolio</Button></Link>
         <Link to="/blog" className={styles.linkWrap}><Button>Blog</Button></Link>
         <Button>Contact Me</Button>
       </nav>

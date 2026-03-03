@@ -5,6 +5,8 @@ import Layout from "./routes/Layout";
 import Home from "./routes/Home";
 import Blog from "./routes/Blog";
 import BlogPost from "./routes/BlogPost";
+import Portfolio from "./routes/Portfolio";
+import PortfolioItem from "./routes/PortfolioItem";
 import "./styles/global.css";
 
 function setThemeVars(theme: typeof lightTheme | typeof darkTheme) {
@@ -54,6 +56,22 @@ export default function App() {
           element={
             <Layout>
               <BlogPost />
+            </Layout>
+          }
+        />
+        <Route
+          path="/portfolio"
+          element={
+            <Layout>
+              <Portfolio />
+            </Layout>
+          }
+        />
+        <Route
+          path="/portfolio/:slug"
+          element={
+            <Layout>
+              <PortfolioItem />
             </Layout>
           }
         />

@@ -19,7 +19,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
       </div>
       <div className={styles.links}>
         <Link to="/" className={styles.linkWrap}><Button className={styles.link}>Home</Button></Link>
-        <Button className={styles.link}>Portfolio</Button>
+        <Link to="/portfolio" className={styles.linkWrap}><Button className={styles.link}>Portfolio</Button></Link>
         <Link to="/blog" className={styles.linkWrap}><Button className={styles.link}>Blog</Button></Link>
         <Button className={styles.link}>Contact Me</Button>
       </div>
