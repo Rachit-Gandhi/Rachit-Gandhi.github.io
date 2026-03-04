@@ -1,7 +1,7 @@
 import BlogListItem from "../molecules/BlogListItem";
 import styles from "./BlogList.module.css";
 
-const posts = [
+export const posts = [
   {
     title: "Sample Blog Post",
     date: "2026-03-03",
