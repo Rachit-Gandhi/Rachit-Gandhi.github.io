@@ -13,8 +13,10 @@ export type ProjectMeta = {
   Component: React.FC;
 };
 
+type MetaOnly = Omit<ProjectMeta, "slug" | "Component">;
+
 export const projects: ProjectMeta[] = [
-  { ...gatorMeta, slug: "gator", Component: Gator },
-  { ...gradingMeta, slug: "automated-grading", Component: Grading },
-  { ...gatewayMeta, slug: "llm-api-gateway", Component: Gateway },
+  { ...(gatorMeta as MetaOnly), slug: "gator", Component: Gator },
+  { ...(gradingMeta as MetaOnly), slug: "automated-grading", Component: Grading },
+  { ...(gatewayMeta as MetaOnly), slug: "llm-api-gateway", Component: Gateway },
 ];

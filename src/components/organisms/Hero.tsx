@@ -1,26 +1,26 @@
 import styles from "./Hero.module.css";
 
 export default function Hero() {
+  const art = String.raw`   (  )   (   )  )
+    ) (   )  (  (
+    ( )  (    ) )
+     __________
+    |          |\\
+    |   ♥♥     | \\
+    |  ♥  ♥    |  \\
+    |   ♥♥     |  |
+    |          |  |
+    |__________| / 
+     \\________/  
+       |    |
+     __|____|__
+    /__________\\`;
+
   return (
     <section className={styles.hero}>
       <div className={styles.heroInner}>
         <div className={styles.asciiWrap}>
-          <pre className={styles.asciiArt}>
-{String.raw`   (  )   (   )  )
-    ) (   )  (  (
-    ( )  (    ) )
-     __________
-    |          |\
-    |   ♥♥     | \
-    |  ♥  ♥    |  \
-    |   ♥♥     |  |
-    |          |  |
-    |__________| / 
-     \________/  
-       |    |
-     __|____|__
-    /__________\`}
-          </pre>
+          <pre className={styles.asciiArt}>{art}</pre>
           <div className={styles.steam}>
             <span>~</span>
             <span>~</span>
