@@ -7,6 +7,13 @@
   padding: 14px;
   text-decoration: none;
   color: var(--text);
+  min-width: 0;
+}
+
+@media (max-width: 720px) {
+  .card {
+    padding: 12px;
+  }
 }
 
 .header {

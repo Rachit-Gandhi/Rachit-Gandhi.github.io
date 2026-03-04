@@ -8,6 +8,16 @@
   padding: 12px;
   text-decoration: none;
   color: var(--text);
+  min-width: 0;
+}
+
+@media (max-width: 720px) {
+  .item {
+    grid-template-columns: 80px 1fr;
+  }
+  .icon {
+    display: none;
+  }
 }
 
 .thumb {

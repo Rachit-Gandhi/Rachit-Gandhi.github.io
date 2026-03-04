@@ -45,6 +45,13 @@
   color: var(--text);
   cursor: pointer;
   font-size: 15px;
+  text-align: left;
+}
+
+@media (max-width: 720px) {
+  .itemHeader {
+    font-size: 14px;
+  }
 }
 
 .itemBody {
