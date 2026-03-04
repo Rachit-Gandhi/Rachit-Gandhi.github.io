@@ -97,8 +97,10 @@ export default function Hero() {
   const visibleSteam = steamLines
     .map((line, index) => {
       const total = steamLines.length;
-      // Reveal from bottom (near cup) upwards
-      return index >= total - visibleLines ? line : "";
+      const shouldShow = index >= total - visibleLines;
+      // Keep each line's width constant; hide unrevealed lines as spaces
+      if (shouldShow) return line;
+      return " ".repeat(line.length || 1);
     })
     .join("\n");
 

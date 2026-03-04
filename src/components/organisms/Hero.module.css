@@ -16,6 +16,18 @@
 @media (max-width: 900px) {
   .heroInner {
     grid-template-columns: 1fr;
+    padding: 24px 20px;
+  }
+  .left {
+    align-items: center;
+    text-align: center;
+  }
+  .asciiWrap {
+    justify-content: center;
+    width: 100%;
+  }
+  .sub {
+    text-align: center;
   }
 }
 
@@ -85,6 +97,20 @@
   flex-direction: column;
   gap: 4px;
   overflow-y: auto;
+}
+
+@media (max-width: 720px) {
+  .recentList {
+    height: 220px;
+    max-height: 220px;
+  }
+}
+
+@media (max-width: 480px) {
+  .recentList {
+    height: 180px;
+    max-height: 180px;
+  }
 }
 
 .recentItem {
