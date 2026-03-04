@@ -1,20 +1,19 @@
 import styles from "./Hero.module.css";
 
 export default function Hero() {
-  const art = String.raw`   (  )   (   )  )
-    ) (   )  (  (
-    ( )  (    ) )
-     __________
-    |          |\\
-    |   ♥♥     | \\
-    |  ♥  ♥    |  \\
-    |   ♥♥     |  |
-    |          |  |
-    |__________| / 
-     \\________/  
-       |    |
-     __|____|__
-    /__________\\`;
+  const art = String.raw`     (  )   (   )  )
+      ) (   )  (  (
+      ( )  (    ) )
+        _____________
+       /             \
+      /   ♥♥  ♥♥       \
+     |   ♥  ♥  ♥  ♥     |
+     |    ♥♥  ♥♥        |
+     |                 |
+      \_______________/
+          |       |
+         _|_______|_
+        /___________\`;
 
   return (
     <section className={styles.hero}>
