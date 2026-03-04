@@ -14,8 +14,11 @@ export default function Header({ onMenuOpen }: HeaderProps) {
         <Link to="/" className={styles.linkWrap}><Button>Home</Button></Link>
       </div>
       <nav className={styles.right}>
-        <Link to="/projects" className={styles.linkWrap}><Button>Portfolio</Button></Link>
+        <Link to="/projects" className={styles.linkWrap}><Button>Projects</Button></Link>
         <Link to="/blog" className={styles.linkWrap}><Button>Blog</Button></Link>
+        <a href="/Resume_Updated_Rachit_Gandhi.pdf" className={styles.linkWrap} download>
+          <Button>Resume</Button>
+        </a>
         <Button>Contact Me</Button>
       </nav>
       <button className={styles.menuToggle} aria-label="Open menu" onClick={onMenuOpen}>
