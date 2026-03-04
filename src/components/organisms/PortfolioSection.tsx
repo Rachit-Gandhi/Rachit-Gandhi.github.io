@@ -1,5 +1,6 @@
 import PortfolioAccordion from "../molecules/PortfolioAccordion";
 import type { PortfolioItem } from "../molecules/PortfolioAccordion";
+import ProjectsList from "./ProjectsList";
 import styles from "./PortfolioSection.module.css";
 
 export default function PortfolioSection() {
@@ -18,22 +19,9 @@ export default function PortfolioSection() {
 
   const projectItems: PortfolioItem[] = [
     {
-      title: "Gator — CLI RSS Feed Aggregator (Go + PostgreSQL)",
-      description:
-        "User registration, feed management, browsing. Goose migrations + SQLC. Concurrency-aware fetching with rate limits; statically compiled binary.",
-      images: ["", "", ""],
-    },
-    {
-      title: "Automated Grading using Generative AI",
-      description:
-        "Evaluated CodeJudge/CodeBleu; semi-automated rubric generation with iterative prompting; reduced manual grading by 50%.",
-      images: ["", "", ""],
-    },
-    {
-      title: "LLM API Gateway (Go, REST + Streaming)",
-      description:
-        "OpenAI-compatible /v1/chat/completions with API key lifecycle management, provider abstraction (OpenAI/Anthropic/Gemini), middleware for logging and rate limiting.",
-      images: ["", "", ""],
+      title: "Projects — see full list",
+      description: "Go to Projects for full details",
+      images: [],
     },
   ];
 
@@ -52,7 +40,10 @@ export default function PortfolioSection() {
       </div>
       <div className={styles.stack}>
         <PortfolioAccordion title="Work Experience" items={workItems} />
-        <PortfolioAccordion title="Projects" items={projectItems} linkHref="/portfolio" anchorId="projects" />
+        <PortfolioAccordion title="Projects" items={projectItems} linkHref="/projects" anchorId="projects" />
+        <div className={styles.miniProjects}>
+          <ProjectsList limit={3} />
+        </div>
         <PortfolioAccordion title="Education" items={educationItems} />
       </div>
     </section>

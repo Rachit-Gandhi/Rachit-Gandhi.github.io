@@ -26,3 +26,8 @@
   display: grid;
   gap: 16px;
 }
+
+.miniProjects {
+  display: grid;
+  gap: 12px;
+}
