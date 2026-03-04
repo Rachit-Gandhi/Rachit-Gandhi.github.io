@@ -6,7 +6,7 @@ export default function Hero() {
       <div className={styles.heroInner}>
         <div className={styles.asciiWrap}>
           <pre className={styles.asciiArt}>
-{`   (  )   (   )  )
+{String.raw`   (  )   (   )  )
     ) (   )  (  (
     ( )  (    ) )
      __________
