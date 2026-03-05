@@ -7,4 +7,4 @@ Base layout setup with:
 - Responsive header with hamburger + sidebar
 - Minimalist footer with social icons
 
-Next steps: fill Home content and build Portfolio / Blog / Contact pages.
+
