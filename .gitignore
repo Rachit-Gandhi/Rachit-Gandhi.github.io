@@ -25,5 +25,3 @@ dist-ssr
 *.sln
 *.sw?
 
-# Local resume PDF (served from public/ but not committed)
-public/Rachit_Gandhi_Updated_Resume.pdf
