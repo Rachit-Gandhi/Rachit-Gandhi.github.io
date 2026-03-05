@@ -52,7 +52,7 @@
                "Liberation Mono", "Courier New", monospace;
 
   font-size: clamp(4px, 0.6vw, 13px); /* responsive scaling */
-  line-height: 0.8;                     /* prevents vertical distortion */
+  line-height: 0.8;                   /* prevents vertical distortion */
   letter-spacing: 0;
   white-space: pre;
 
@@ -106,15 +106,23 @@
 
 @media (max-width: 720px) {
   .recentList {
-    height: 220px;
-    max-height: 220px;
+    height: auto;
+    max-height: 60vh;
   }
 }
 
 @media (max-width: 480px) {
   .recentList {
-    height: 180px;
-    max-height: 180px;
+    height: auto;
+    max-height: 55vh;
+  }
+}
+
+@media (max-width: 720px) {
+  .asciiArt {
+    font-size: 6px;
+    line-height: 0.9;
+    transform: none; /* avoid horizontal skew on small screens */
   }
 }
 
