@@ -24,3 +24,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local resume PDF (served from public/ but not committed)
+public/Resume_Updated_Rachit_Gandhi.pdf

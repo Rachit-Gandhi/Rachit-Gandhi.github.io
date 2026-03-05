@@ -68,6 +68,11 @@
   font-size: 14px;
 }
 
+.credit {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
 .recent {
   display: flex;
   flex-direction: column;
@@ -88,8 +93,8 @@
 
 .recentList {
   flex: 0 0 auto;
-  height: 480px;
-  max-height: 480px;
+  height: 420px;
+  max-height: 420px;
   padding: 8px;
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.12);
@@ -153,4 +158,26 @@
 
 .recentText {
   font-size: 13px;
+}
+
+.resumeButton {
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.18);
+  background: var(--primary);
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    background 0.16s ease,
+    transform 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+.resumeButton:hover {
+  background: rgba(76, 175, 125, 0.9);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }

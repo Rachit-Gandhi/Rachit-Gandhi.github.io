@@ -132,10 +132,32 @@ export default function Hero() {
               {coffee}
             </pre>
           </div>
+          <div className={styles.sub}>
+            Cappuccino moment — ASCII, with steam drawing in layer by layer.
+            {" "}
+            <span className={styles.credit}>
+              Coffee ASCII from{" "}
+              <a
+                href="https://textart.sh/topic/coffee"
+                target="_blank"
+                rel="noreferrer"
+              >
+                textart.sh
+              </a>
+              .
+            </span>
+          </div>
         </div>
         <aside className={styles.recent}>
           <div className={styles.recentHeader}>
             <h2 className={styles.recentTitle}>Recent developments</h2>
+            <a
+              href="/Resume_Updated_Rachit_Gandhi.pdf"
+              download="Rachit_Gandhi_Resume.pdf"
+              className={styles.resumeButton}
+            >
+              Resume
+            </a>
           </div>
           <div className={styles.recentList}>
             {recentItems.map((item) => (
