@@ -151,13 +151,6 @@ export default function Hero() {
         <aside className={styles.recent}>
           <div className={styles.recentHeader}>
             <h2 className={styles.recentTitle}>Recent developments</h2>
-            <a
-              href="/Resume_Updated_Rachit_Gandhi.pdf"
-              download="Rachit_Gandhi_Resume.pdf"
-              className={styles.resumeButton}
-            >
-              Resume
-            </a>
           </div>
           <div className={styles.recentList}>
             {recentItems.map((item) => (

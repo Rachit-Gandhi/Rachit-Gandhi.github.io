@@ -16,7 +16,7 @@ export default function Header({ onMenuOpen }: HeaderProps) {
       <nav className={styles.right}>
         <Link to="/projects" className={styles.linkWrap}><Button>Projects</Button></Link>
         <Link to="/blog" className={styles.linkWrap}><Button>Blog</Button></Link>
-        <a href="/Resume_Updated_Rachit_Gandhi.pdf" className={styles.linkWrap} download>
+        <a href="/Rachit_Gandhi_Updated_Resume.pdf" className={styles.linkWrap} download>
           <Button>Resume</Button>
         </a>
         <Button>Contact Me</Button>
