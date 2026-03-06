@@ -60,7 +60,7 @@
   /* 1x0.65 => 0.5x0.325 */
   /*transform:scaleY(0.5);*/
   transform: scaleX(0.625);
-  transform-origin: center;
+  transform-origin: top center;
 }
 
 .sub {
@@ -119,10 +119,24 @@
 }
 
 @media (max-width: 720px) {
+  .asciiWrap {
+    justify-content: center;
+    align-items: center;
+    max-height: 260px;
+    overflow-y: auto;
+  }
+
   .asciiArt {
-    font-size: 6px;
-    line-height: 0.9;
+    margin: 0 auto;
+    font-size: 4px;
+    line-height: 0.85;
     transform: none; /* avoid horizontal skew on small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .asciiArt {
+    font-size: 3px;
   }
 }
 
