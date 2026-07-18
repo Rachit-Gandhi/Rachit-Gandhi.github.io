@@ -72,7 +72,7 @@ export default function PortfolioSection() {
         <SectionRow title="Publication">
           <div className={styles.publication}>
             <p className={styles.proof}>RESEARCH EVIDENCE</p>
-            <strong>Rubric Is All You Need: Improving LLM-based Code Evaluation</strong>
+            <a className={styles.publicationTitle} href="https://dl.acm.org/doi/10.1145/3702652.3744220" target="_blank" rel="noopener noreferrer"><strong>Rubric Is All You Need: Improving LLM-based Code Evaluation With Question-Specific Rubrics</strong></a>
             <p>How can LLM feedback be tied to clear, inspectable criteria? I led research on rubric-grounded evaluation for programming work.</p>
             <div className={styles.publicationMeta}><span>Primary Author · ACM International Computing Education Research</span><span className={styles.meta}>ICER 2025</span></div>
           </div>
