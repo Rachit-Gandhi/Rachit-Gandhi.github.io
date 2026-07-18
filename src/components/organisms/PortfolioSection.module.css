@@ -61,10 +61,7 @@
   min-width: 0;
 }
 
-.publication div {
-  display: grid;
-  gap: 4px;
-}
+.publication{display:grid;gap:9px;padding:20px;border:1px solid color-mix(in oklab,var(--primary) 27%,transparent);background:color-mix(in oklab,var(--primary) 5%,transparent)}.publication p{margin:0;color:var(--textMuted);font-size:14px;line-height:1.5}.publication>div{display:flex;justify-content:space-between;gap:14px}.proof{color:var(--primary)!important;font:700 10px ui-monospace,monospace!important;letter-spacing:.08em}
 
 .publication strong,
 .education strong {

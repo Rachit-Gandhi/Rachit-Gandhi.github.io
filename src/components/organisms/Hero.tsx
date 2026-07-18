@@ -1,210 +1,80 @@
 import { useEffect, useState } from "react";
+import { ArrowDown, Play, Terminal } from "lucide-react";
 import styles from "./Hero.module.css";
 
-type FetchLine = {
-  label: string;
-  value: string;
-};
+type Command = "help" | "traceflo" | "router" | "research";
 
-const fetchLines: FetchLine[] = [
-  {
-    label: "Role",
-    value: "Software engineer brewing production GenAI systems",
-  },
-  {
-    label: "Kernel",
-    value: "Backend architecture, API design, and boring reliability",
-  },
-  {
-    label: "Packages",
-    value: "Python, Go, SQL, FastAPI, Django REST, Gin, Node.js",
-  },
-  {
-    label: "AI Stack",
-    value: "RAG, LangGraph, Azure OpenAI Foundry, Azure AI Search",
-  },
-  {
-    label: "Data Path",
-    value: "PostgreSQL, PySpark, Pinecone, Databricks, Kafka",
-  },
-  {
-    label: "Latest Patch",
-    value: "Multi-agent workflows, LMS OAuth, reusable chat surfaces",
-  },
-  {
-    label: "Paper Trail",
-    value: "Primary author, ICER 2025 code-evaluation research",
-  },
-  {
-    label: "Shell Mood",
-    value: "Ships practical systems; debugs before the coffee gets cold",
-  },
+const commands: { id: Command; label: string; command: string }[] = [
+  { id: "help", label: "Show capabilities", command: "help" },
+  { id: "traceflo", label: "Replay TraceFlo", command: "traceflo replay demo-checkout" },
+  { id: "router", label: "Inspect Go Router", command: "go-router inspect request" },
+  { id: "research", label: "Open research", command: "research show icer-2025" },
 ];
 
-type ColorSwatch = {
-  title: string;
-  color: string;
-};
+const heroLine = "I build reliable\nbackend + GenAI systems.";
 
-const swatches: ColorSwatch[] = [
-  { title: "primary", color: "var(--primary)" },
-  { title: "bg", color: "var(--bg)" },
-  { title: "surface", color: "var(--surface)" },
-  { title: "secondary", color: "var(--secondary)" },
-];
+const output: Record<Command, { kicker: string; title: string; body: string; result: string }> = {
+  help: { kicker: "SYSTEMS CONSOLE / READY", title: "Backend systems with proof built in.", body: "Explore a browser trace, route a model request, or inspect the research behind better code evaluation.", result: "3 interactive system views available" },
+  traceflo: { kicker: "TRACEFLO / REPLAY 01", title: "A test that can explain itself.", body: "Intent is captured beside the action frame and network evidence—then replayed deterministically when the UI changes.", result: "intent → browser frame → network evidence → replay" },
+  router: { kicker: "GO ROUTER / REQUEST 47", title: "One request. A policy-aware route.", body: "Tenant policy selects a provider, records the decision, and returns a response without leaking the complexity to callers.", result: "policy ✓  provider: azure-openai  audit: written" },
+  research: { kicker: "ICER 2025 / PAPER TRAIL", title: "Rubrics make LLM evaluation more useful.", body: "Primary-author research on grounding code evaluation in explicit criteria—not just a model's unexplained judgement.", result: "Published at ACM ICER 2025" },
+};
 
 export default function Hero() {
-  // A broad, side-view cappuccino bowl
-  const steam = String.raw`
-                                                                      ░░                                                      
-                                                                ████                                                      
-                                                                ██░░                                                      
-                                                                  ██                                                      
-                                                                    ██▒▒                                                  
-                                                                      ██                                                  
-                                ▒▒                                    ░░██                                                
-                                  ▒▒▒▒▒▒                                ██                                                
-                                  ░░  ████              ▒▒              ██                                                
-                                          ████          ████            ██                                                
-                                            ████          ████          ██                                                
-                                              ██            ██        ████                                                
-                                            ████            ██        ██                                                  
-                                          ████          ██████      ██                                                    
-                                        ████          ████          ██                                                    
-                                      ██              ██            ██                                                    
-                                      ██              ████          ██                                                    
-                                        ██              ████        ██                                                    
-                                          ▓▓▓▓██                    ░░▓▓                                                  
-                                              ██                                                                          
-                                              ░░                                        
-                `;
-  const coffee = String.raw`
-                                                                    
-                                ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓                                      
-                          ▓▓▓▓▓▓██░░░░    ░░░░    ░░░░    ░░░░    ░░░░    ░░░░  ░░██▓▓▓▓▓▓██                              
-                    ▓▓▓▓████░░░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒  ░░░░░░  ████                            
-                  ████░░░░░░▓▓▓▓████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██▓▓▓▓▓▓▓▓    ████                          
-                  ██░░▓▓▓▓████░░░░                                            ░░▒▒░░░░██▓▓██  ██                          
-                ░░▓▓  ██▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓██  ██                          
-                  ▓▓  ██▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒██  ██        ▒▒▓▓▓▓▒▒██        
-                ░░▓▓  ░░░░██▓▓▓▓▓▓▓▓▓▓██▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓██  ██    ▒▒████  ░░░░████      
-                  ▓▓      ░░░░░░▒▒░░░░████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓████░░░░▒▒    ██  ████░░░░      ░░██▒▒    
-                  ██                  ░░░░░░▒▒░░░░▒▒▒▒░░░░▒▒▒▒░░░░▒▒░░░░░░▒▒▒▒░░░░░░          ██████░░            ░░██▒▒  
-                  ▓▓                                                                          ████    ██████████    ░░▓▓  
-                  ▓▓                                                                          ████████        ████    ░░██
-                  ▓▓                                                                          ██  ██            ██    ░░██
-                  ▓▓                                                                          ████              ██    ░░██
-                  ▓▓        ██                                                                ████          ██████    ░░██
-                  ▓▓        ██                                                                ████████████████        ░░██
-                  ▓▓        ██                                                                ██                      ░░██
-                  ▓▓        ██                                                                ██                    ░░████
-                  ▓▓        ████                                                              ████                ██▓▓    
-                  ▓▓          ██                                                              ████████████████████        
-                  ▓▓          ████                                                            ██░░      ░░    ░░░░        
-                  ██▓▓          ██                                                            ██                          
-                  ░░████          ██                                                          ██                          
-                      ██▓▓        ████                                                    ▓▓▓▓██                          
-                      ░░██▓▓        ████                                              ▓▓▓▓██  ░░                          
-              ▓▓██▓▓▓▓▓▓██████      ░░██▓▓██                                      ▓▓████████▓▓▓▓▓▓▓▓▓▓▓▓▓▓██              
-      ████▓▓████  ░░░░    ░░██▓▓██        ██                                      ██████  ░░░░    ░░░░    ░░▓▓▓▓▓▓▓▓▒▒    
-    ████░░░░░░░░            ░░████▓▓██    ░░                                  ▓▓██████░░                    ░░░░░░  ██▒▒  
-  ████                          ██████                                    ████████                                    ░░██
-  ██░░                            ████▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓██████                                      ████
-  ████                            ▒▒████████████████████████████████████████▒▒                                      ████░░
-    ██                              ░░░░▒▒░░░░░░▒▒░░░░░░▒▒░░░░▒▒░░░░░░░░░░                                  ▒▒▒▒▒▒████░░  
-    ████▒▒                                                                                        ▒▒▒▒▒▒▒▒████▒▒▒▒░░░░    
-    ░░  ██▒▒▒▒                                                                        ▒▒▒▒▒▒▒▒▒▒████▒▒░░░░▒▒░░            
-          ░░████████████████████████████████████                            ██████████                                    
-                                              ██████████████████████████████▓▓                                            
-  `;
-
-  const steamLines = steam.trimEnd().split("\n");
-  const [visibleLines, setVisibleLines] = useState<number>(0);
+  const [active, setActive] = useState<Command>("help");
+  const [typed, setTyped] = useState("");
+  const [typedHero, setTypedHero] = useState("");
+  const activeCommand = commands.find((item) => item.id === active)!;
 
   useEffect(() => {
-    const total = steamLines.length;
-    const interval = window.setInterval(() => {
-      setVisibleLines((prev) => {
-        if (prev >= total) {
-          return 0;
-        }
-        return prev + 1;
-      });
-    }, 140);
+    let i = 0;
+    const timer = window.setInterval(() => {
+      i += 1;
+      setTyped(activeCommand.command.slice(0, i));
+      if (i >= activeCommand.command.length) window.clearInterval(timer);
+    }, 24);
+    return () => window.clearInterval(timer);
+  }, [active, activeCommand.command]);
 
-    return () => window.clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    let i = 0;
+    const timer = window.setInterval(() => {
+      i += 1;
+      setTypedHero(heroLine.slice(0, i));
+      if (i >= heroLine.length) window.clearInterval(timer);
+    }, 42);
+    return () => window.clearInterval(timer);
   }, []);
 
-  const visibleSteam = steamLines
-    .map((line, index) => {
-      const total = steamLines.length;
-      const shouldShow = index >= total - visibleLines;
-      // Keep each line's width constant; hide unrevealed lines as spaces
-      if (shouldShow) return line;
-      return " ".repeat(line.length || 1);
-    })
-    .join("\n");
+  const [firstLine = "", secondLine = ""] = typedHero.split("\n");
 
-  return (
-    <section className={styles.hero}>
-      <div className={styles.heroInner}>
-        <div className={styles.fetchPanel} aria-label="Rachit neofetch summary">
-          <div className={styles.chromeBar}>
-            <div className={styles.windowDots} aria-hidden="true">
-              <span />
-              <span />
-              <span />
-            </div>
-            <div className={styles.fetchPrompt}>rachit@portfolio:~$ neofetch</div>
+  return <section className={styles.hero} aria-labelledby="hero-title">
+    <div className={styles.intro}>
+      <p className={styles.eyebrow}><Terminal size={14} /> rachit@systems:~</p>
+      <h1 id="hero-title" aria-label={heroLine.replace("\n", " ")}>
+        {firstLine}<br /><em>{secondLine}</em><i className={styles.heroCursor} aria-hidden="true" />
+      </h1>
+      <div className={styles.actions}>
+        <button className={styles.primaryAction} onClick={() => setActive("traceflo")}><Play size={15} fill="currentColor" /> Run TraceFlo replay</button>
+        <a className={styles.textAction} href="#projects">See selected systems <ArrowDown size={15} /></a>
+      </div>
+    </div>
+    <div className={styles.console}>
+      <div className={styles.chrome}><span /><span /><span /><p>living-systems-console</p><b>live</b></div>
+      <div className={styles.consoleBody}>
+        <div className={styles.commandLine}><span>❯</span> {typed}<i /></div>
+        <div className={styles.commandChoices} aria-label="Console commands">
+          {commands.map((item) => <button key={item.id} onClick={() => setActive(item.id)} className={active === item.id ? styles.selected : ""}><span>$</span>{item.command}</button>)}
+        </div>
+        <div className={styles.resultPanel} data-mode={active}>
+          <div className={styles.visual} aria-hidden="true">
+            <div className={styles.node}>intent</div><div className={styles.line} /><div className={styles.node}>action</div><div className={styles.line} /><div className={styles.node}>evidence</div>
+            <div className={styles.pulse} />
           </div>
-          <div className={styles.fetchOutput}>
-            <div className={styles.asciiWrap} aria-hidden="true">
-              <pre className={styles.asciiArt}>
-                {visibleSteam}
-                {coffee}
-              </pre>
-            </div>
-            <div className={styles.fetchInfo}>
-              <div className={styles.fetchIdentity}>
-                <h1 className={styles.fetchName}>Rachit Gandhi</h1>
-                <p className={styles.fetchSubtitle}>
-                  Software engineer / backend systems / GenAI pragmatist
-                </p>
-              </div>
-              <dl className={styles.fetchList}>
-                {fetchLines.map((line) => (
-                  <div className={styles.fetchLine} key={line.label}>
-                    <dt>{line.label}</dt>
-                    <dd>{line.value}</dd>
-                  </div>
-                ))}
-              </dl>
-              <div className={styles.swatches} aria-label="Theme colors">
-                {swatches.map((swatch) => (
-                  <span
-                    key={swatch.title}
-                    className={styles.swatch}
-                    style={{ background: swatch.color }}
-                    title={swatch.title}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-          <div className={styles.credit}>
-            Coffee ASCII from{" "}
-            <a
-              href="https://textart.sh/topic/coffee"
-              target="_blank"
-              rel="noreferrer"
-            >
-              textart.sh
-            </a>
-            . Steam patched in at runtime.
-          </div>
+          <div className={styles.copy}><p>{output[active].kicker}</p><h2>{output[active].title}</h2><div>{output[active].body}</div><code>{output[active].result}</code></div>
         </div>
       </div>
-    </section>
-  );
+      <div className={styles.consoleFooter}>Click a command or use the visible controls. No terminal fluency required.</div>
+    </div>
+  </section>;
 }
