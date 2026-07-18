@@ -55,7 +55,7 @@ export default function Hero() {
         {firstLine}<br /><em>{secondLine}</em><i className={styles.heroCursor} aria-hidden="true" />
       </h1>
       <div className={styles.actions}>
-        <button className={styles.primaryAction} onClick={() => setActive("traceflo")}><Play size={15} fill="currentColor" /> Run TraceFlo replay</button>
+        <a className={styles.primaryAction} href="https://traceflo.dev" target="_blank" rel="noopener noreferrer" onClick={() => setActive("traceflo")} aria-label="Run TraceFlo replay (opens in a new tab)"><Play size={15} fill="currentColor" /> Run TraceFlo replay</a>
         <a className={styles.textAction} href="#projects">See selected systems <ArrowDown size={15} /></a>
       </div>
     </div>
